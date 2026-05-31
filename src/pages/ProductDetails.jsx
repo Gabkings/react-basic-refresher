@@ -3,11 +3,13 @@ import {useParams, useNavigate} from 'react-router-dom'
 
 import {useState, useEffect} from 'react'
 import {getProductById} from '../data/product'
+import { useCart } from "../context/CartContext";
 
 function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null)
+  const { addToCart } = useCart();
 
   async function productDetails(product) {
     await setProduct(product)
@@ -43,6 +45,7 @@ function ProductDetails() {
             <p className="product-detail-description">{product.description}</p>
             <button
               className="btn btn-primary"
+                onClick={() => addToCart(product.id)}
             >
               Add to Cart 
             </button>
