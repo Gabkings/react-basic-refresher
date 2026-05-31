@@ -1,12 +1,14 @@
 
 import { createContext, useState, useContext } from "react";
 import { getProductById } from "../data/product";
+import { useNavigate } from "react-router-dom";
 
 
 const CartContext = createContext(null);
 
 export default function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]); // {id: 2, quantity: 7}
+    const [cartItems, setCartItems] = useState([]); // {id: 2, quantity: 7}
+    const navigate = useNavigate();
 
   function addToCart(productId) {
     const existing = cartItems.find((item) => item.id === productId);
@@ -34,6 +36,9 @@ export default function CartProvider({ children }) {
 
   function removeFromCart(productId) {
     setCartItems(cartItems.filter((item) => item.id !== productId));
+    if(getCartItemsWithProducts().length === 0) {
+      navigate("/");
+    }
   }
 
   function updateQuantity(productId, quantity) {
@@ -58,6 +63,7 @@ export default function CartProvider({ children }) {
 
   function clearCart() {
     setCartItems([]);
+    navigate("/");
   }
 
   return (

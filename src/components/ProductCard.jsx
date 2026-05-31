@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import { useCart } from "../context/CartContext";
 
 function ProductCard({ product }) {
+    const { addToCart } = useCart();
   return (
     <>
         <div  key={product.id} className="product-card">
@@ -10,7 +12,9 @@ function ProductCard({ product }) {
                 <p className="product-card-price">{product.price.toFixed(2)}</p>
                 <div className="product-card-actions">
                   <Link to={`/products/${product.id}`} className="btn btn-secondary">View Details</Link>
-                  <button className="btn btn-primary">Add to Cart</button>
+                  <button className="btn btn-primary" onClick={() => addToCart(product.id)}>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             </div>
